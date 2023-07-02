@@ -1,0 +1,32 @@
+.wrapper{
+    display: flex;
+    width: 78%;
+    margin: 0 auto;
+}
+@media screen and (max-width: 1380px){
+    .wrapper{
+        justify-content: space-around;
+    }
+}
+.header-wrapper__logo{
+    display: flex;
+    justify-content: center;
+    margin-right: 243px;
+}
+.header-wrapper__bookshop{
+    font-size: 24px;
+    line-height: 29px;
+    margin-right: 243px;
+
+    color: #1C2A39;
+}
+@media screen and (max-width: 1380px){
+    .header-wrapper__bookshop{
+        margin: 0;
+    }
+}
+@media screen and (max-width: 650px){
+    .header-wrapper__bookshop{
+        font-size: 16px;
+    }
+}

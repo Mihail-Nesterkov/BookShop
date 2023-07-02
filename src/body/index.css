@@ -1,0 +1,119 @@
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+
+    /*font-family: 'Open Sans', sans-serif;*/
+}
+.main{
+position: relative;
+}
+.main-change{
+    display: flex;
+    align-items: flex-end;
+    width: 149px;
+    height: 204px;
+    background-color: #9E98DC;
+
+    text-decoration: none;
+    position: absolute;
+    top: 195px;
+    left: 85%;
+}
+@media screen and (max-width: 800px){
+    .main-change{
+        width: 74px;
+        height: 102px;
+    }
+}
+@media screen and (max-width: 650px){
+    .main-change{
+        width: 55px;
+        height: 90px;
+        position: absolute;
+        top: 50px;
+        left: 69%;
+    }
+}
+.main-top{
+    display: flex;
+    align-items: flex-end;
+    width: 158px;
+    height: 273px;
+    background-color: #FF8FE6;
+    text-decoration: none;
+
+    position: absolute;
+    top: 475px;
+    left: 90%;
+}
+@media screen and (max-width: 800px){
+    .main-top{
+        width: 79px;
+        height: 137px;
+    }
+    .main-top{
+        position: absolute;
+        top: 308px;
+        left: 90%;
+    }
+}
+@media screen and (max-width: 650px){
+    .main-top{
+        width: 50px;
+        height: 90px;
+        position: absolute;
+        top: 145px;
+        left: 75%;
+    }
+}
+.main-change__block{
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+}
+@media screen and (max-width: 800px){
+    .main-change__block{
+        padding: 10px;
+    }
+}
+.main-change__text{
+    margin-bottom: 4px;
+    display: flex;
+    flex-wrap: wrap;
+
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #1C2A39;
+}
+@media screen and (max-width: 800px){
+    .main-change__text{
+        font-size: 8px;
+    }
+}
+.main-top__text{
+    margin-bottom: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 69px;
+
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #1C2A39;
+}
+@media screen and (max-width: 800px){
+    .main-top__text{
+        font-size: 8px;
+        max-width: 30px;
+    }
+}
+.main-change__arrow{
+    width: 55px;
+}
+@media screen and (max-width: 800px){
+    .main-change__arrow{
+        width: 30px;
+    }
+}

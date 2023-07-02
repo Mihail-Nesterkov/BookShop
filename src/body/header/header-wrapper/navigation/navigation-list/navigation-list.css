@@ -1,0 +1,29 @@
+.navigation-list{
+    display: flex;
+}
+
+.navigation-list li{
+    font-size: 10px;
+    line-height: 12px;
+
+    color: #5C6A79;
+
+    margin-right: 40px;
+
+    cursor: pointer;
+}
+.navigation-list li:hover, .navigation-list li:focus{
+    background-color: #1C2A39;
+    color: #EEEDF5;
+}
+@media screen and (max-width: 800px){
+    .navigation-list li{
+        margin-right: 10px;
+    }
+}
+@media screen and (max-width: 550px){
+    .navigation-list li{
+        font-size: 7px;
+        margin-bottom: 3px;
+    }
+}

@@ -1,0 +1,44 @@
+.navigation-icon-list li{
+    margin-right: 40px;
+}
+.navigation-icon-list img{
+    width: 12px;
+}
+@media screen and (max-width: 800px){
+    .navigation-icon-list li{
+        margin-right: 10px;
+    }
+    .navigation-icon-list img{
+        width: 8px;
+    }
+}
+.navigation-icon-list .navigation-icon-list__shop-bag{
+    margin: 0;
+}
+.navigation-icon-list{
+    display: flex;
+    justify-content: center;
+}
+.navigation-icon{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.navigation-icon-counter{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: #FF353A;
+
+    position: absolute;
+    bottom: 4px;
+    right: -6px;
+}
+.number{
+    font-weight: 500;
+    font-size: 10px;
+    color: #FFFFFF;
+}

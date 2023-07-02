@@ -1,0 +1,15 @@
+.header{
+    display: flex;
+    padding: 47px 0 40px 0;
+    width: 100%;
+    background: #FFFFFF;
+
+    position: fixed;
+    top: 0;
+    z-index: 3;
+}
+@media screen and (max-width: 650px){
+    .header{
+        padding: 5px 0;
+    }
+}

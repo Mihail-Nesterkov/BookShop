@@ -1,0 +1,76 @@
+.wrapper-slader{
+    display: flex;
+    width: 78%;
+    margin: 0 auto;
+}
+@media screen and (max-width: 1380px){
+    .wrapper-slader{
+        justify-content: center;
+    }
+}
+.slader{
+    max-width: 1120px;
+    height: 702px;
+    margin-top: 116px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.slader-image{
+    width: 1120px;
+    height: 702px;
+    background-size: cover;
+}
+@media screen and (max-width: 1380px){
+    .slader-image{
+        width: 784px;
+        height: 491px;
+    }
+    .slader{
+        width: 784px;
+        height: 491px;
+    }
+}
+@media screen and (max-width: 800px){
+    .slader-image{
+        width: 627px;
+        height: 393px;
+    }
+    .slader{
+        width: 627px;
+        height: 393px;
+    }
+}
+@media screen and (max-width: 650px){
+    .slader-image{
+        width: 313px;
+        height: 196px;
+    }
+    .slader{
+        width: 313px;
+        height: 196px;
+        margin-top: 50px;
+    }
+}
+.slader-dots{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slader-dots:last-child{
+    margin: 0;
+}
+.alips{
+    margin-top: 17px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #EFEEF6;
+    margin-right: 10px;
+
+    cursor: pointer;
+}
+#dotActive{
+    background: #9E98DC;
+}
