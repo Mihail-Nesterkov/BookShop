@@ -13,7 +13,8 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new TerserWebpackPlugin(),
         new CssMinimizerPlugin(),
-        new ESLintPlugin()],
+        new ESLintPlugin()
+    ],
     optimization: {
         minimize: true,
         minimizer: [
@@ -24,13 +25,14 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.css$/,
                 use: [{
                     loader: MiniCssExtractPlugin.loader,
                     options: {
                         esModule: true,
                     }
                 }, 'css-loader'],
-                test: /\.css$/,
+
             }
         ]
     },

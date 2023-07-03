@@ -1,10 +1,15 @@
-
+function books(){
 const list = document.querySelector('.book-list-categories-list');
 const cardBook = document.querySelector('.card-book');
 const categories = ["Architecture", "Art & Fashion", "Biography", "Business", "Crafts & Hobbies", "Drama", "Fiction", "Food & Drink", "Health & Wellbeing", "History & Politics", "Humor", "Poetry", "Psychology", "Science", "Technology", "Travel & Maps"];
 let newCategories = [];
 const cotegories_list = ["Architecture", "Art", "Biography & Autobiography", "Business", "Crafts & Hobbies", "Drama", "Fiction", "Cooking", "Health & Wellbeing", "History", "Humor", "Poetry", "Psychology", "Science", "Technology", "Travel"];
 let ind = 0;
+let card = '';
+let maxResult = 0;
+let ratingValue = [];
+let ratingsCount = '';
+let booksId = [];
 
 function categoriesF(){
     for (let i = 0; i < categories.length; i++){
@@ -27,61 +32,45 @@ function clickCategories(){
             card = '';
             maxResult = 0;
             ratingValue = [];
-            useRequest(maxResult);
+            useRequest(maxResult, ind);
         });
     }
 }
-let arr;
-let card = '';
-let maxResult = 0;
-let ratingValue = [];
-let ratingsCount = '';
-let booksId = new Map();
-
-function useRequest(maxResult) {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q="subject:${cotegories_list[ind]}"&key=AIzaSyCcvD2L3e-yGHFXA1JMZag-Jec9Ig12824&printType=books&startIndex=${maxResult}&maxResults=6&langRestrict=en`)
-        .then((response) => {
-            const result = response.json();
-            return result;
-        })
-        .then((data) => {
-            arr = data;
-            display(arr);
-        })
-        .catch(() => {
-            console.log('error');
-        });
+async function useRequest(maxResult, ind) {
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q="subject:${cotegories_list[ind]}"&key=AIzaSyCcvD2L3e-yGHFXA1JMZag-Jec9Ig12824&printType=books&startIndex=${maxResult}&maxResults=6&langRestrict=en`);
+    const jsonData = await res.json();
+    display(jsonData);
 }
-function display(arr) {
-    for (let i = 0; i < arr.items.length; i++) {
+function display(jsonData) {
+    for (let i = 0; i < jsonData.items.length; i++) {
         let price = '';
-        if (arr.items[i].saleInfo.retailPrice == undefined) {
+        if (jsonData.items[i].saleInfo.retailPrice == undefined) {
             price = '';
         } else {
-            price = `$${arr.items[i].saleInfo.retailPrice.amount}`;
+            price = `$${jsonData.items[i].saleInfo.retailPrice.amount}`;
         }
         let description = '';
-        if (arr.items[i].volumeInfo.description == undefined) {
+        if (jsonData.items[i].volumeInfo.description == undefined) {
             description = '';
         } else {
-            description = `${arr.items[i].volumeInfo.description}`;
+            description = `${jsonData.items[i].volumeInfo.description}`;
         }
-        if (arr.items[i].volumeInfo.averageRating == undefined) {
+        if (jsonData.items[i].volumeInfo.averageRating == undefined) {
             ratingValue.push(0);
         } else {
-            ratingValue.push(arr.items[i].volumeInfo.averageRating * 50 / 5);
+            ratingValue.push(jsonData.items[i].volumeInfo.averageRating * 50 / 5);
         }
-        if (arr.items[i].volumeInfo.ratingsCount == undefined) {
+        if (jsonData.items[i].volumeInfo.ratingsCount == undefined) {
             ratingsCount = '';
         } else {
-            ratingsCount = arr.items[i].volumeInfo.ratingsCount + ' review';
+            ratingsCount = jsonData.items[i].volumeInfo.ratingsCount + ' review';
         }
         const cardBlock = `
             <div class="card-book-singl">
-            <div class="card-book__block-book"><img src="${arr.items[i].volumeInfo.imageLinks.thumbnail}" alt="" class="card-book__img-book"></div>
+            <div class="card-book__block-book"><img src="${jsonData.items[i].volumeInfo.imageLinks.thumbnail}" alt="" class="card-book__img-book"></div>
             <div class="card-book-info">
-            <p class="card-book__authors">${arr.items[i].volumeInfo.authors}</p>
-            <p class="card-book__title">${arr.items[i].volumeInfo.title}</p>
+            <p class="card-book__authors">${jsonData.items[i].volumeInfo.authors}</p>
+            <p class="card-book__title">${jsonData.items[i].volumeInfo.title}</p>
             <div class="rating">
                  <div class="star">
                     <div class="star_active" style="width: ${ratingValue[i]}%"></div>
@@ -90,17 +79,14 @@ function display(arr) {
             </div>
                  <p class="card-book__description">${description}</p>
                  <p class="card-book__price">${price}</p>
-                 <button class="card-book__button" id="${arr.items[i].id}">BUY NOW</button>
+                 <button class="card-book__button" id="${jsonData.items[i].id}">BUY NOW</button>
             </div>                    
         </div>`;
         card = card + cardBlock;
     }
     cardBook.innerHTML = card;
-    let localBook = new Map(JSON.parse(localStorage.myMap));
+    let localBook = JSON.parse(localStorage.getItem("booksId"));
     startBook(localBook);
-    buyNow();
-    inTheCard();
-    initCounter(booksId);
 }
 function buyNow(){
     let all_btn_buyNow = '';
@@ -108,9 +94,9 @@ function buyNow(){
     for (let i = 0; i < all_btn_buyNow.length; i++){
         all_btn_buyNow[i].addEventListener('click', () => {
             let buyId = `${all_btn_buyNow[i].id}`;
-            booksId.set(`${all_btn_buyNow[i].id}`, `${all_btn_buyNow[i].id}`);
-            localStorage.myMap = JSON.stringify(Array.from(booksId.entries()));
-            initCounter(booksId);
+            booksId.push(`${all_btn_buyNow[i].id}`);
+            booksId = Array.from(new Set(booksId));
+            localStorage.setItem('booksId', JSON.stringify(booksId));
             initBtnBuy(buyId);
         });
     }
@@ -119,15 +105,16 @@ function initBtnBuy(buyId){
     document.querySelector(`#${buyId}`).setAttribute('class', 'card-book__button-active');
     document.querySelector(`#${buyId}`).innerText = 'IN THE CART';
     inTheCard();
+    initCounter();
 }
 function inTheCard(){
     let all_btn_inTheCart = document.querySelectorAll('.card-book__button-active');
     for (let i = 0; i < all_btn_inTheCart.length; i++){
         all_btn_inTheCart[i].addEventListener('click', () => {
             let inId = `${all_btn_inTheCart[i].id}`;
-            booksId.delete(`${inId}`);
-            localStorage.myMap = JSON.stringify(Array.from(booksId.entries()));
-            initCounter(booksId);
+            let del = booksId.indexOf(`${all_btn_inTheCart[i].id}`);
+            booksId.splice(`${del}`, `${del}`);
+            localStorage.setItem('booksId', JSON.stringify(booksId));
             initBtnIn(inId);
         });
     }
@@ -136,32 +123,37 @@ function initBtnIn(inId){
     document.querySelector(`#${inId}`).setAttribute('class', 'card-book__button');
     document.querySelector(`#${inId}`).innerText = 'BUY NOW';
     buyNow();
+    initCounter();
 }
 function startBook(localBook){
-    booksId = localBook;
-    for (let key of localBook.keys()) {
-        if (document.querySelector(`#${key}`) !== null) {
-            document.querySelector(`#${key}`).setAttribute('class', 'card-book__button-active');
-            document.querySelector(`#${key}`).innerText = 'IN THE CART';
+    if (localBook !== null){
+        for (let i = 0; i < localBook.length; i++) {
+            document.querySelector(`#${localBook[i]}`).setAttribute('class', 'card-book__button-active');
+            document.querySelector(`#${localBook[i]}`).innerText = 'IN THE CART';
         }
+        booksId = localBook;
     }
+    buyNow();
+    inTheCard();
+    initCounter();
 }
 let loadMore = document.querySelector('.book-list-book__load-more');
 loadMore.addEventListener('click', () => {
     maxResult += 6;
-    useRequest(maxResult);
+    useRequest(maxResult, ind);
 });
-function initCounter(booksId){
-    if (booksId.size > 0){
-        let counterNumber = `<p class="number">${booksId.size}</p>`;
+function initCounter(){
+    let number = document.querySelectorAll('.card-book__button-active');
+    if (number.length > 0){
+        let counterNumber = `<p class="number">${number.length}</p>`;
         document.querySelector('.navigation-icon-counter').style.display = 'flex';
         document.querySelector('.navigation-icon-counter').innerHTML = counterNumber;
     }else {
         document.querySelector('.navigation-icon-counter').style.display = 'none';
     }
 }
-document.addEventListener('DOMContentLoaded', categoriesF);
-document.addEventListener('DOMContentLoaded', useRequest(ind));
-document.addEventListener('DOMContentLoaded', clickCategories);
-
-export {list, categories, cotegories_list, categoriesF, activCategories, useRequest};
+    useRequest(maxResult, ind);
+    categoriesF();
+    clickCategories();
+}
+export {books};

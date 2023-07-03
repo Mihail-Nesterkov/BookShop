@@ -47,5 +47,5 @@ function initSlader(){
         new_dots_list[ind].id = 'dotActive';
     }
 }
-document.addEventListener('DOMContentLoaded', initSlader);
+// document.addEventListener('DOMContentLoaded', initSlader);
 export {img, initSlader};
