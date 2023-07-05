@@ -10,6 +10,7 @@ let maxResult = 0;
 let ratingValue = [];
 let ratingsCount = '';
 let booksId = [];
+let localBook;
 
 function categoriesF(){
     for (let i = 0; i < categories.length; i++){
@@ -85,8 +86,21 @@ function display(jsonData) {
         card = card + cardBlock;
     }
     cardBook.innerHTML = card;
-    let localBook = JSON.parse(localStorage.getItem("booksId"));
+    storage();
     startBook(localBook);
+}
+function storage(){
+    localBook = JSON.parse(localStorage.getItem("booksId"));
+    if (localBook === null){
+        localBook = [];
+    }
+    if (booksId.length === localBook.length){
+        inTheCard();
+        buyNow();
+        initCounter(booksId);
+    }else {
+        startBook(localBook);
+    }
 }
 function buyNow(){
     let all_btn_buyNow = '';
@@ -104,8 +118,7 @@ function buyNow(){
 function initBtnBuy(buyId){
     document.querySelector(`#${buyId}`).setAttribute('class', 'card-book__button-active');
     document.querySelector(`#${buyId}`).innerText = 'IN THE CART';
-    inTheCard();
-    initCounter();
+    storage();
 }
 function inTheCard(){
     let all_btn_inTheCart = document.querySelectorAll('.card-book__button-active');
@@ -113,7 +126,11 @@ function inTheCard(){
         all_btn_inTheCart[i].addEventListener('click', () => {
             let inId = `${all_btn_inTheCart[i].id}`;
             let del = booksId.indexOf(`${all_btn_inTheCart[i].id}`);
-            booksId.splice(`${del}`, `${del}`);
+            if (del === 0){
+                booksId = [];
+            }else {
+                booksId.splice(`${del}`, `${del}`);
+            }
             localStorage.setItem('booksId', JSON.stringify(booksId));
             initBtnIn(inId);
         });
@@ -122,30 +139,29 @@ function inTheCard(){
 function initBtnIn(inId){
     document.querySelector(`#${inId}`).setAttribute('class', 'card-book__button');
     document.querySelector(`#${inId}`).innerText = 'BUY NOW';
-    buyNow();
-    initCounter();
+    storage();
 }
 function startBook(localBook){
-    if (localBook !== null){
+    if (localBook.length > 0){
         for (let i = 0; i < localBook.length; i++) {
+            if ((document.querySelector(`#${localBook[i]}`)) !== null){
             document.querySelector(`#${localBook[i]}`).setAttribute('class', 'card-book__button-active');
             document.querySelector(`#${localBook[i]}`).innerText = 'IN THE CART';
+            }
+            booksId = localBook;
         }
-        booksId = localBook;
+        initCounter(booksId);
+        storage();
     }
-    buyNow();
-    inTheCard();
-    initCounter();
 }
 let loadMore = document.querySelector('.book-list-book__load-more');
 loadMore.addEventListener('click', () => {
     maxResult += 6;
     useRequest(maxResult, ind);
 });
-function initCounter(){
-    let number = document.querySelectorAll('.card-book__button-active');
-    if (number.length > 0){
-        let counterNumber = `<p class="number">${number.length}</p>`;
+function initCounter(booksId){
+    if (booksId.length > 0){
+        let counterNumber = `<p class="number">${booksId.length}</p>`;
         document.querySelector('.navigation-icon-counter').style.display = 'flex';
         document.querySelector('.navigation-icon-counter').innerHTML = counterNumber;
     }else {

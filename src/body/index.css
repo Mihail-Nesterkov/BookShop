@@ -21,6 +21,26 @@ position: relative;
     top: 195px;
     left: 85%;
 }
+@media screen and (max-width: 1380px){
+    .main-change{
+        position: absolute;
+        top: 150px;
+        left: 75%;
+    }
+}
+@media screen and (max-width: 1175px){
+    .main-change{
+        width: 120px;
+        height: 170px;
+    }
+}
+@media screen and (max-width: 1000px){
+    .main-change{
+        position: absolute;
+        top: 170px;
+        left: 80%;
+    }
+}
 @media screen and (max-width: 800px){
     .main-change{
         width: 74px;
@@ -29,10 +49,10 @@ position: relative;
 }
 @media screen and (max-width: 650px){
     .main-change{
-        width: 55px;
-        height: 90px;
+        width: 48px;
+        height: 67px;
         position: absolute;
-        top: 50px;
+        top: 74px;
         left: 69%;
     }
 }
@@ -48,6 +68,29 @@ position: relative;
     top: 475px;
     left: 90%;
 }
+@media screen and (max-width: 1380px){
+    .main-top{
+        width: 124px;
+        height: 220px;
+
+        position: absolute;
+        top: 385px;
+        left: 80%;
+    }
+}
+@media screen and (max-width: 1175px){
+    .main-top{
+        width: 100px;
+        height: 186px;
+    }
+}
+@media screen and (max-width: 1175px){
+    .main-top{
+        position: absolute;
+        top: 328px;
+        left: 85%;
+    }
+}
 @media screen and (max-width: 800px){
     .main-top{
         width: 79px;
@@ -55,14 +98,14 @@ position: relative;
     }
     .main-top{
         position: absolute;
-        top: 308px;
-        left: 90%;
+        top: 277px;
+        left: 85%;
     }
 }
 @media screen and (max-width: 650px){
     .main-top{
-        width: 50px;
-        height: 90px;
+        width: 44px;
+        height: 70px;
         position: absolute;
         top: 145px;
         left: 75%;
