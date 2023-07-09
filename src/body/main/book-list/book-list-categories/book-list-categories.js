@@ -116,8 +116,8 @@ function buyNow(){
     }
 }
 function initBtnBuy(buyId){
-    document.querySelector(`#${buyId}`).setAttribute('class', 'card-book__button-active');
-    document.querySelector(`#${buyId}`).innerText = 'IN THE CART';
+    document.getElementById(`${buyId}`).setAttribute('class', 'card-book__button-active');
+    document.getElementById(`${buyId}`).innerText = 'IN THE CART';
     storage();
 }
 function inTheCard(){
@@ -137,16 +137,16 @@ function inTheCard(){
     }
 }
 function initBtnIn(inId){
-    document.querySelector(`#${inId}`).setAttribute('class', 'card-book__button');
-    document.querySelector(`#${inId}`).innerText = 'BUY NOW';
+    document.getElementById(`${inId}`).setAttribute('class', 'card-book__button');
+    document.getElementById(`${inId}`).innerText = 'BUY NOW';
     storage();
 }
 function startBook(localBook){
     if (localBook.length > 0){
         for (let i = 0; i < localBook.length; i++) {
-            if ((document.querySelector(`#${localBook[i]}`)) !== null){
-            document.querySelector(`#${localBook[i]}`).setAttribute('class', 'card-book__button-active');
-            document.querySelector(`#${localBook[i]}`).innerText = 'IN THE CART';
+            if ((document.getElementById(`${localBook[i]}`)) !== null){
+            document.getElementById(`${localBook[i]}`).setAttribute('class', 'card-book__button-active');
+            document.getElementById(`${localBook[i]}`).innerText = 'IN THE CART';
             }
             booksId = localBook;
         }
